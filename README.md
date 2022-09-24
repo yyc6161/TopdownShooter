@@ -1,1 +1,3 @@
 # TopdownShooter
+
+这是一个Top-down视角的射击小游戏。
