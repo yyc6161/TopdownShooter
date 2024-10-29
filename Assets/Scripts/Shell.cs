@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +7,7 @@ namespace Game.WeaponSystem
     {
         [SerializeField] private float _flyTime = 0.5f;
         [SerializeField] private float _rotationSpeed;
-        [SerializeField] private int _veclocityFactor = 2;
+        [SerializeField] private int _velocityFactor = 2;
         [SerializeField] private float _randomFactor = 0.5f;
         
         [SerializeField] private Rigidbody2D _rigidbody;
@@ -24,7 +23,7 @@ namespace Game.WeaponSystem
             var randomPoint = Random.insideUnitCircle;
             direction += randomPoint * _randomFactor;
             
-            _rigidbody.velocity = direction * _veclocityFactor;
+            _rigidbody.linearVelocity = direction * _velocityFactor;
         }
         
         private void FixedUpdate()
@@ -39,7 +38,7 @@ namespace Game.WeaponSystem
                 }
                 else
                 {
-                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.linearVelocity = Vector2.zero;
                     _isFlying = false;
                 }
             }

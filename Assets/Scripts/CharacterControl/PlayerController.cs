@@ -1,4 +1,3 @@
-using System;
 using Game.Common;
 using Game.WeaponSystem;
 using UnityEngine;

@@ -1,4 +1,3 @@
-using System;
 using Game.CharacterControl;
 using Game.Common;
 using Game.Shared;
@@ -29,8 +28,8 @@ namespace Game.WeaponSystem
         public void DoFire(Vector3 firePosition, Vector3 fireDirection)
         {
             transform.position = firePosition;
-            var fireDiection2D = new Vector2(fireDirection.x, fireDirection.y).normalized;
-            _rigidbody.AddForce(fireDiection2D * _bulletForce);
+            var fireDirection2D = new Vector2(fireDirection.x, fireDirection.y).normalized;
+            _rigidbody.AddForce(fireDirection2D * _bulletForce);
 
             _isFiring = true;
             _fireTime = 0;
@@ -38,7 +37,7 @@ namespace Game.WeaponSystem
 
         public void Stop(BulletEffectType effectType = BulletEffectType.None)
         {
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
             _isFiring = false;
 
             switch (effectType)
