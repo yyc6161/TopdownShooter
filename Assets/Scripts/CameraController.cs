@@ -10,7 +10,7 @@ namespace Game.Common
         [SerializeField] private Transform _followerTransform;
         [SerializeField] private Transform _mouseIndicatorTransform;
         [SerializeField] private float _smoothSpeed = 2f;
-        [SerializeField, Range(0, 1f)] private float _progress = 0.5f;
+        [SerializeField, Range(0, 0.5f)] private float _progress = 0.5f;
 
         [Header("屏幕震动效果")] 
         [SerializeField] private float _shakeLevel = 2;
@@ -55,7 +55,7 @@ namespace Game.Common
             var mouseScreenPos = Mouse.current.position.ReadValue();
             var mousePos = _camera.ScreenToWorldPoint(mouseScreenPos);
             mousePos.z = 0;
-            var followerTargetPos = BetweenPoint(_playerTransform.position, mousePos);
+            var followerTargetPos = (mousePos - _playerTransform.position) * _progress + _playerTransform.position;
             _mouseIndicatorTransform.position = mousePos;
             
             var smoothPos = Vector3.Lerp(_followerTransform.position, followerTargetPos, _smoothSpeed *  Time.deltaTime);
@@ -73,13 +73,6 @@ namespace Game.Common
             var newPos = new Vector3(followerPos.x, followerPos.y, _transform.position.z);
 
             _transform.position = newPos;
-        }
-        
-        private Vector3 BetweenPoint(Vector3 start, Vector3 end)
-        {
-            Vector3 normal = (end - start).normalized;
-            float distance = Vector3.Distance(start, end);
-            return normal * (distance * _progress) + start;
         }
 
         private void DoShakeCamera()
