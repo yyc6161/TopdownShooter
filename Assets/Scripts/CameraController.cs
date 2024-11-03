@@ -4,7 +4,6 @@ using Random = UnityEngine.Random;
 
 namespace Game.Common
 {
-    [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
         [SerializeField] private Transform _playerTransform;
@@ -25,7 +24,7 @@ namespace Game.Common
         private float _shakeFrameTime;
         private float _shakingTimer;
         private float _frameTime;
-        private float shakeDelta = 0.005f;
+        private float _shakeDelta = 0.005f;
         private Rect _defaultRect;
         private Rect _changeRect;
 
@@ -33,7 +32,7 @@ namespace Game.Common
 
         private void Start()
         {
-            _camera = GetComponent<Camera>();
+            _camera = Camera.main;
             _transform = transform;
             
             _defaultRect = _camera.rect;
@@ -94,14 +93,14 @@ namespace Game.Common
             else
             {
                 _frameTime += Time.deltaTime;
-                if (_frameTime >= _shakeFrameTime)
-                {
-                    _frameTime -= _shakeFrameTime;
-                    _changeRect.x = _defaultRect.x + shakeDelta * (_currentShakeLevel * (Random.value - 0.5f));
-                    _changeRect.y = _defaultRect.y + shakeDelta * (_currentShakeLevel * (Random.value - 0.5f));
+                
+                if (_frameTime < _shakeFrameTime) return;
+                
+                _frameTime -= _shakeFrameTime;
+                _changeRect.x = _defaultRect.x + _shakeDelta * (_currentShakeLevel * (Random.value - 0.5f));
+                _changeRect.y = _defaultRect.y + _shakeDelta * (_currentShakeLevel * (Random.value - 0.5f));
 
-                    _camera.rect = _changeRect;
-                }
+                _camera.rect = _changeRect;
             }
         }
     }
